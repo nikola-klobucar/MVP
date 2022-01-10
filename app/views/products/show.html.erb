@@ -1,0 +1,24 @@
+<h1>Product Number <%= @product.id %></h1>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Product Code</th>
+            <th>Description</th>
+            <th>Specification</th>
+        </tr>
+    </thead>
+
+    <tbody>
+            <tr>
+                <td><%=  @product.name %></td>
+                <td><%=  @product.product_code %></td>
+                <td><%=  @product.description %></td>
+                <td><%=  @product.specs %></td>
+            </tr>
+    </tbody>
+</table>
+
+<br>
