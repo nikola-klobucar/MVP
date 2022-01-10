@@ -5,9 +5,12 @@ one:
   description: MyText
   specs: MyText
   product_code: MyString
+  user: foo
 
 two:
   name: MyString
   description: MyText
   specs: MyText
-  product_code: MyString
+  product_code: MyString2
+  user: bar
+

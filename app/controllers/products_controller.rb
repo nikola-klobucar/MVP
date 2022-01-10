@@ -16,11 +16,9 @@ class ProductsController < ApplicationController
         @product = Product.new(product_params.merge(user: current_user))
         respond_to do |format|
             if @product.save
-                byebug
                 format.html { redirect_to @product, notice: "Product was successfully created"}
                 format.json { render :show, status: :created}
               else
-                byebug
                 format.html { render :new }
                 format.json { render json: @product.errors, status: :unprocessable_entity}
             end
