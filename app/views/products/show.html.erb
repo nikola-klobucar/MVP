@@ -17,6 +17,11 @@
                 <td><%=  @product.product_code %></td>
                 <td><%=  @product.description %></td>
                 <td><%=  @product.specs %></td>
+                <% if user_signed_in? && current_user.admin == true %>
+                  <%= link_to 'Edit', edit_product_path %>
+                  <%= link_to 'Destroy', product_path, method: :delete, data: {confirm: "Are you sure?"} %>
+                <% end %>
+            
             </tr>
     </tbody>
 </table>
