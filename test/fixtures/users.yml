@@ -6,7 +6,6 @@
 #
 foo: 
   email: "foo@bar.com"
-  admin: true
 #
 bar:   
   email: "foo2@bar.com"

@@ -3,6 +3,7 @@ class ProductsController < ApplicationController
 
     def index
         @products = Product.all
+        @products = @products.search(params[:q].downcase) if params[:q] && !params[:q].empty?
     end
 
     def show
@@ -19,7 +20,7 @@ class ProductsController < ApplicationController
                 format.html { redirect_to @product, notice: "Product was successfully created"}
                 format.json { render :show, status: :created}
               else
-                format.html { render :new }
+                format.html { redirect_to new_user_session_path, notice: "You must be signed-in first" }
                 format.json { render json: @product.errors, status: :unprocessable_entity}
             end
         end

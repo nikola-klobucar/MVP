@@ -17,16 +17,16 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create product" do
-    assert_difference('Product.count') do
-      post products_url, params: {product: 
+  test "should not create new product without authorization" do
+    assert_no_difference('Product.count') do
+      post products_path, params: {product: 
                                     {name: @product.name, 
                                     description: @product.description,
                                     specs: @product.specs,
-                                    product_code: "somethingelse",
-                                    user: @user }
+                                    product_code: "somethingelse"}
                                   }
     end
+    assert_redirected_to new_user_session_path
   end
 
   test "should show the product" do
