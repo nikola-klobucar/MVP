@@ -21,7 +21,7 @@ ActiveAdmin.register Product do
   end
 
   form do |f|
-    f.inputs :name, :description, :specs, :sold
+    f.inputs :name, :description, :specs, :price, :sold
     actions
   end
   

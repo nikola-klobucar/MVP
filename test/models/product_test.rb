@@ -18,16 +18,11 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test "the unique product code" do
-    assert @product
     product_copy = @product.dup
     
-    assert @product.save
+    assert @product
     assert_not product_copy.save
 
     product_copy.errors.messages[:product_code].include?('has already been taken')
-  end
-
-  test "product belongs to the user" do
-    
   end
 end
