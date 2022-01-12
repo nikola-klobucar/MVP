@@ -29,6 +29,9 @@
         <li class="nav-item">
         <%= link_to 'Create New Product', new_product_path, class: 'nav-link' %>
         </li>
+        <li class="nav-item">
+        <%= link_to "#{current_order.order_items.size} items in cart and price #{current_order.subtotal}", carts_path, class: 'nav-link' %>
+        </li>
     <% end %>
     </ul>
 

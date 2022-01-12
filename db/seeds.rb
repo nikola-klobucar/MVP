@@ -8,13 +8,15 @@ puts "Creating a user"
 puts "Creating products"
 
 10.times do
-    Product.create(
+    @product = Product.new(
         name: Faker::Device.model_name,
         description: Faker::Lorem.sentences(number: 1),
         specs: Faker::Lorem.sentences(number: 1),
         product_code: Faker::Alphanumeric.alpha(number: 10),
-        user_id: @user.id
+        user_id: @user.id,
+        price: Faker::Number.decimal(l_digits: 3)
     )
+    @product.save
 end
 
 puts "Creating an admin"

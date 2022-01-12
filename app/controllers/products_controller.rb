@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
     before_action :set_product, only: [:show, :edit, :update, :destroy]
+    before_action :set_order, only: [:index, :show]
 
     def index
         @products = Product.all
@@ -54,10 +55,14 @@ class ProductsController < ApplicationController
     private
 
         def product_params
-            params.require(:product).permit(:name, :description, :specs, :product_code, :sold)
+            params.require(:product).permit(:name, :description, :specs, :product_code, :sold, :price)
         end
 
         def set_product
             @product = Product.find(params[:id])
+        end
+
+        def set_order
+            @order_item = current_order.order_items.new
         end
 end

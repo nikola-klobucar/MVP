@@ -1,8 +1,9 @@
 class Product < ApplicationRecord
-    validates :name, presence: true
+    validates :name, :price, presence: true
     validates :product_code, uniqueness: true
 
     belongs_to :user
+    has_many :order_items
 
     before_create :generate_product_code
 
