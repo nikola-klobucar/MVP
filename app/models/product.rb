@@ -1,12 +1,14 @@
 class Product < ApplicationRecord
-    validates :name, :price, presence: true
+    before_create :generate_product_code
+
+    validates :name, :price_cents, presence: true
     validates :product_code, uniqueness: true
 
     belongs_to :user
     has_many :order_items
 
-    before_create :generate_product_code
-
+    monetize :price_cents
+    
     def self.search(params)
         where("LOWER(name) LIKE :term", 
         term: "%#{params}%")

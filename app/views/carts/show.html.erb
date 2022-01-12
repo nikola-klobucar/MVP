@@ -14,9 +14,9 @@
         <td><%=  item.product.description %></td>
         <td><%=  item.product.specs %></td>
         <td>
-            <%= form_for(item, remote: true) do |f| %>
+            <%= form_for(item, remote: true, method: :patch) do |f| %>
                 <%= f.hidden_field :product_id, value: item.product.id %>
-                <%=  item.product.price %>
+                <%=  item.product.price_cents %>
                 <%= f.text_field :quantity, value: item.quantity.to_i, min: 1, class: 'form-control' %>
                 <%= f.submit "Update Quantity", class: 'btn btn-primary' %>
                 <%= link_to 'Delete', item, method: :delete, remote: true, class: 'btn btn-danger' %>
@@ -25,6 +25,10 @@
         </td>
     </tr>
   <% end %>
+  <br>
+    <%= link_to "Pay", root_path, class: 'btn btn-primary' %>
+    
+
 <% else %>
   
 <% end %>
