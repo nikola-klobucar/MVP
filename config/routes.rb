@@ -12,5 +12,4 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
   resources :order_items
   resource :carts, only: [:show]
-  resource :checkouts, only: [:show]
 end
