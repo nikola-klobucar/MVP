@@ -4,8 +4,8 @@ class Product < ApplicationRecord
     validates :name, :price, presence: true
     validates :product_code, uniqueness: true
 
-    belongs_to :user
     has_many :order_items
+    belongs_to :admin_user
     
     def self.search(params)
         where("LOWER(name) LIKE :term", 

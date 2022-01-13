@@ -1,7 +1,7 @@
 ActiveAdmin.register Product do
-  permit_params :name, :description, :specs, :sold, :user_id, :price
+  permit_params :name, :description, :specs, :sold, :admin_user, :price
 
-  includes :user
+  includes :admin_user
 
   filter :name
   filter :user
@@ -15,7 +15,7 @@ ActiveAdmin.register Product do
     column :specs
     column :sold?
     column :product_code
-    column :user
+    column :admin_user
     column :price
     actions
   end

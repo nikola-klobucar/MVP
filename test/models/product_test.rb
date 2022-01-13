@@ -12,8 +12,8 @@ class ProductTest < ActiveSupport::TestCase
     assert_not products(:one).valid?
   end
 
-  test "must hold a user" do
-    products(:one).update(user: nil)
+  test "must hold a admin user" do
+    products(:one).update(admin_user: nil)
     assert_not products(:one).valid?
   end
 
@@ -28,8 +28,8 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test "product generates unique product code" do
-    product_1 = Product.new(name: "bla", price: 100, user: users(:foo))
-    product_2 = Product.new(name: "sra", price: 100, user: users(:bar))
+    product_1 = Product.new(name: "bla", price: 100, admin_user: admin_users(:admin))
+    product_2 = Product.new(name: "sra", price: 100, admin_user: admin_users(:admin))
 
     product_1.save
     product_2.save

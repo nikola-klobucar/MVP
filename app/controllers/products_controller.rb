@@ -1,8 +1,7 @@
 class ProductsController < ApplicationController
     before_action :set_product, only: [:show, :edit, :update, :destroy]
     before_action :set_order, only: [:index, :show]
-    before_action :authenticate_user!, only: [:new]
-
+    
     def index
         @products = Product.all
         @products = @products.search(params[:q].downcase) if params[:q] && !params[:q].empty?
@@ -16,7 +15,8 @@ class ProductsController < ApplicationController
     end
 
     def create
-        @product = Product.new(product_params.merge(user: current_user))
+        @product = Product.new(product_params)
+        binding.pry
         respond_to do |format|
             if @product.save
                 format.html { redirect_to @product, notice: "Product was successfully created"}
@@ -56,7 +56,7 @@ class ProductsController < ApplicationController
     private
 
         def product_params
-            params.require(:product).permit(:name, :description, :specs, :product_code, :sold, :price)
+            params.require(:product).permit(:name, :description, :specs, :product_code, :sold, :price, :admin_user)
         end
 
         def set_product

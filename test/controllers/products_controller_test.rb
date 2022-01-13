@@ -18,9 +18,19 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get to admin dashboard page" do
+    get admin_users_url
+    assert_response :success
+  end
+
+  test "should get to the new projects page" do
+    get admin_products_url
+    assert_response :success
+  end
+
   test "can create a project" do
     assert_difference("Product.count") do
-      post products_url, params: { product: { name: "Produkt", price: 300, user: users(:foo)}}
+      post admin_products_url, params: { product: { name: "Produkt", price: 300}}
     end
   end
 end
