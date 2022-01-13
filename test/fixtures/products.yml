@@ -5,6 +5,7 @@ one:
   description: MyText
   specs: MyText
   product_code: MyString
+  price: 100
   user: foo
 
 two:
@@ -13,4 +14,5 @@ two:
   specs: MyText
   product_code: MyString2
   user: bar
+  price: 200
 

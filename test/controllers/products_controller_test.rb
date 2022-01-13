@@ -1,41 +1,26 @@
 require "test_helper"
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @product = products(:one)
-    @user = users(:baz)
+
+  def setup
+    sign_in admin_users(:admin)
   end
 
-
   test "should get index" do
+    sign_out :admin
     get root_url
     assert_response :success
   end
 
-  test "should get new" do
-    get new_product_path
+  test "redirected if user is not logged in" do
+    sign_out :admin
+    get new_admin_product_url
     assert_response :success
   end
 
-  test "should not create new product without authorization" do
-    assert_no_difference('Product.count') do
-      post products_path, params: {product: 
-                                    {name: @product.name, 
-                                    description: @product.description,
-                                    specs: @product.specs,
-                                    product_code: "somethingelse"}
-                                  }
+  test "can create a project" do
+    assert_difference("Product.count") do
+      post products_url, params: { product: { name: "Produkt", price: 300, user: users(:foo)}}
     end
-    assert_redirected_to new_user_session_path
-  end
-
-  test "should show the product" do
-    get product_path(@product)
-    assert_response :success
-  end
-
-  test "shozld get edit" do
-    get edit_product_path(@product)
-    assert_response :success
   end
 end
