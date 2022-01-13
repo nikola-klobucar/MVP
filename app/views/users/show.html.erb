@@ -4,30 +4,24 @@
 <table>
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Product Code</th>
-            <th>Description</th>
-            <th>Specification</th>
-            <th>Options</th>
+            <th>Email</th>
+            <th>Your Orders</th>
         </tr>
     </thead>
 
     <tbody>  
-        <% current_user.products.each do |p|%>
-            <tr>
-                <td><%=  p.name %></td>
-                <td><%=  p.description %></td>
-                <td><%=  p.specs %></td>
-                <td><%=  p.product_code %></td>
-                <% if user_signed_in? %>
-                    <td>
-                        <%=  link_to 'Edit', edit_product_path(p) %>
-                        <%= link_to 'Destroy', product_path, method: :delete, data: {confirm: "Are you sure?"} %>
-                    </td>
-                <% end %>
+        <tr>
+            <td><%= current_user.email %></td>
+            <% current_user.orders.each do |o| %>
+                <td>Price: <%= o.subtotal %><br>
+                Address: <%= o.address %><br>
+                Currency: <%= o.currency %><br>
+                Zip Code: <%= o.zip_code %><br><br>
+                </td>
 
-            </tr>
-        <% end %>
+
+            <% end %>
+        </tr>
     </tbody>
 </table>
 

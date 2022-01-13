@@ -1,5 +1,6 @@
 class Order < ApplicationRecord
-    has_many :order_items
+    has_many :order_items, dependent: :destroy
+    belongs_to :user
     before_save :set_subtotal
 
     def subtotal

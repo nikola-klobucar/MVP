@@ -1,10 +1,10 @@
 ActiveAdmin.register Product do
-  permit_params :name, :description, :specs, :sold, :admin_user, :price
+  permit_params :name, :description, :specs, :price, :sold, :product_code, :admin_user_id
 
   includes :admin_user
 
   filter :name
-  filter :user
+  filter :admin_user
   filter :sold
 
   index do
@@ -21,7 +21,7 @@ ActiveAdmin.register Product do
   end
 
   form do |f|
-    f.inputs :name, :description, :specs, :price, :sold
+    f.inputs :name, :description, :specs, :price, :sold, :admin_user
     actions
   end
   
