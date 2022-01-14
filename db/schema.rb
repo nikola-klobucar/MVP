@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_14_132356) do
+ActiveRecord::Schema.define(version: 2022_01_14_151800) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2022_01_14_132356) do
     t.string "phone"
     t.text "comment"
     t.integer "user_id"
+    t.string "transaction_type", default: "authorize"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
