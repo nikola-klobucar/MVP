@@ -1,0 +1,8 @@
+<%= form_for(@order_item) do |item| %>
+    <%= item.hidden_field :product_id, value: @product.id %>
+    <%=  @product.price %>
+    <% if user_signed_in? %>
+        <%= item.text_field :quantity, value: 1, min: 1, class: 'form-control' %>
+        <%= item.submit "Add to cart", class: 'btn btn-primary btn-sm' %>
+    <% end %>
+<% end %>
