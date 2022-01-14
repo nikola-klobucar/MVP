@@ -3,8 +3,11 @@ class Product < ApplicationRecord
 
     validates :name, :price, presence: true
     validates :product_code, uniqueness: true
+    validates :currency, presence: true
 
-    has_many :order_items
+    monetize :price, as: :price_cents
+
+    has_one :order_item
     belongs_to :admin_user
     
     def self.search(params)

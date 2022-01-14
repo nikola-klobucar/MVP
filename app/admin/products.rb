@@ -1,5 +1,5 @@
 ActiveAdmin.register Product do
-  permit_params :name, :description, :specs, :price, :sold, :product_code, :admin_user_id
+  permit_params :name, :description, :specs, :price_cents, :sold, :product_code, :admin_user_id
 
   includes :admin_user
 
@@ -16,12 +16,12 @@ ActiveAdmin.register Product do
     column :sold?
     column :product_code
     column :admin_user
-    column :price
+    column :price_cents
     actions
   end
 
   form do |f|
-    f.inputs :name, :description, :specs, :price, :sold, :admin_user
+    f.inputs :name, :description, :specs, :price_cents, :sold, :admin_user
     actions
   end
   

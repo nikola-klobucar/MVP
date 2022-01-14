@@ -9,6 +9,7 @@
             <th>Description</th>
             <th>Specification</th>
             <th>Price</th>
+            <th>Currency</th>
         </tr>
     </thead>
 
@@ -21,7 +22,8 @@
                 <td>
                     <%= render partial: "shared/add_to_cart_show" %>
                 </td>
-            
+                <td><%=  @product.currency %></td>
+
             </tr>
     </tbody>
 </table>

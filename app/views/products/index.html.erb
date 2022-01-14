@@ -9,6 +9,7 @@
             <th>Description</th>
             <th>Specification</th>
             <th>Price</th>
+            <th>Currency</th>
             <th>View Product</th>
         </tr>
     </thead>
@@ -23,13 +24,14 @@
                 <td>
                     <%= form_for(@order_item) do |item| %>
                         <%= item.hidden_field :product_id, value: product.id %>
-                        <%=  product.price %>
+                        <%=  product.price_cents/100 %>
                         <% if user_signed_in? %>
                             <%= item.text_field :quantity, value: 1, min: 1, class: 'form-control' %>
                             <%= item.submit "Add to cart", class: 'btn btn-primary btn-sm' %>
                         <% end %>
                     <% end %>
                 </td>
+                <td><%=  product.currency %></td>
                 <td><%= link_to 'Show', product %></td>
             </tr>
         <%end%>
