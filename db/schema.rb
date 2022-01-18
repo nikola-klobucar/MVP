@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_14_151800) do
+ActiveRecord::Schema.define(version: 2022_01_18_124850) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -56,14 +56,24 @@ ActiveRecord::Schema.define(version: 2022_01_14_151800) do
     t.string "address"
     t.string "city"
     t.integer "zip_code"
-    t.integer "card_number", limit: 16
-    t.date "exp_date"
-    t.integer "cvv", limit: 3
     t.string "phone"
     t.text "comment"
     t.integer "user_id"
     t.string "transaction_type", default: "authorize"
+    t.string "order_number"
+    t.string "order_info", default: "This is an Order Info"
+    t.string "currency"
+    t.integer "payment_id"
+    t.index ["payment_id"], name: "index_orders_on_payment_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.string "card_number"
+    t.string "exp_date"
+    t.string "cvv"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "products", force: :cascade do |t|
@@ -94,5 +104,6 @@ ActiveRecord::Schema.define(version: 2022_01_14_151800) do
 
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
+  add_foreign_key "orders", "payments"
   add_foreign_key "products", "admin_users"
 end

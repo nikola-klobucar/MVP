@@ -6,7 +6,6 @@ class OrderItemsController < ApplicationController
         @order.user = current_user
         @order.save!
         session[:order_id] = @order.id
-
     end
 
     def update

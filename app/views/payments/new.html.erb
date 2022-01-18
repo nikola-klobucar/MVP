@@ -1,0 +1,7 @@
+<%= simple_form_for(@payment) do |a| %>
+  <%= a.input :card_number, label: "Card Number" %>
+  <%= a.input :cvv, label: "CVV" %>
+  <%= a.input :exp_date, label: "Expiration Date" %>
+  <%= submit_tag "Purchase", :class => "btn pay_submit" %>
+
+<% end %>

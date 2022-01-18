@@ -31,6 +31,7 @@ gem 'faker'
 gem 'activeadmin'
 gem 'money-rails', '~>1.12'
 gem 'awesome_print', '~> 1.8'
+gem 'faraday', '~> 2.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

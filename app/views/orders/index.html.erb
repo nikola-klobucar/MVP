@@ -2,11 +2,10 @@
   <%= a.input :address, label: "Address" %>
   <%= a.input :city, label: "City" %>
   <%= a.input :zip_code, label: "Zip Code" %>
-  <%= a.input :card_number, label: "Card Number" %>
-  <%= a.input :exp_date, label: "Expiry Date" %>
-  <%= a.input :cvv, label: "CVV" %>
   <%= a.input :phone, label: "Phone Number" %>
   <%= a.input :comment, label: "Leave a comment" %>
-
-  <%= a.button :submit, class: "btn btn-primary" %>
+  <%= a.hidden_field :transaction_type, :value => "purchase" %>
+  <%= a.hidden_field :currency, :value => current_order.products.first.currency%>
+  <%= submit_tag "Order", :class => "btn pay_submit" %>
 <% end %>
+
