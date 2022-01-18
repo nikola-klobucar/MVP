@@ -5,5 +5,7 @@ FactoryBot.define do
     unit_price { 1.5 }
     quantity { 1 }
     total_price { 1.5 }
+    order
+    product
   end
 end
