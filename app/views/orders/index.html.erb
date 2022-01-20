@@ -1,6 +1,7 @@
 <%= simple_form_for(@order, method: :patch) do |a| %>
   <%= a.input :address, label: "Address" %>
   <%= a.input :country, as: :country %>
+  <%= a.hidden_field :transaction_type, :value => "purchase" %>
   <%= a.button :submit, :class => "btn pay_submit" %>
 <% end %>
 

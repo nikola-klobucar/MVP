@@ -11,6 +11,7 @@ class PaymentsController < ApplicationController
         gon.client_secret = @client_secret
         gon.address = @order.address
         gon.country = @order.country
+        binding.pry
         session[:order_id] = nil
     end
 

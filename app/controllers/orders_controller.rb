@@ -2,6 +2,7 @@ class OrdersController < ApplicationController
 
     def index
         @order = current_order
+        binding.pry
     end
 
     def update
