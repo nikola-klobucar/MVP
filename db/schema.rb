@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_18_124850) do
+ActiveRecord::Schema.define(version: 2022_01_20_112003) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(version: 2022_01_18_124850) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.float "subtotal"
-    t.float "total"
+    t.integer "subtotal"
+    t.integer "total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "address"
@@ -64,6 +64,8 @@ ActiveRecord::Schema.define(version: 2022_01_18_124850) do
     t.string "order_info", default: "This is an Order Info"
     t.string "currency"
     t.integer "payment_id"
+    t.string "client_secret"
+    t.string "country"
     t.index ["payment_id"], name: "index_orders_on_payment_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end

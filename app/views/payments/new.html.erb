@@ -1,7 +1,15 @@
-<%= simple_form_for(@payment) do |a| %>
-  <%= a.input :card_number, label: "Card Number" %>
-  <%= a.input :cvv, label: "CVV" %>
-  <%= a.input :exp_date, label: "Expiration Date" %>
-  <%= submit_tag "Purchase", :class => "btn pay_submit" %>
+<form action="/" method="post" id="payment-form">
+    <div class="form-row">
+        <label for="card-element">
+            Credit or debit card
+        </label>
+        <div id="card-element">
+          <%= javascript_pack_tag 'monri', 'data-turbolinks-track': 'reload' %>
+          <!-- A Monri Component will be inserted here. -->
+        </div>
 
-<% end %>
+        <!-- Used to display Component errors. -->
+        <div id="card-errors" role="alert"></div>
+    </div>
+    <%= button_to 'Submit Payment', root_url, :class => 'btn btn-primary'%>
+</form>

@@ -39,7 +39,7 @@ class Order < ApplicationRecord
             "transaction_type": transaction_type,
             "order_info": order_info,
             "scenario": "charge",
-            "supported_payment_method": ["blasra"]
+            "supported_payment_method": ["card"]
         }
         body_as_string = req.to_json
         merchent_key = Rails.application.credentials.config[:web_pay][:merchent_key]

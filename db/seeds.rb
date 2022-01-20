@@ -18,7 +18,7 @@ puts "Creating products"
         specs: Faker::Lorem.sentences(number: 1),
         product_code: Faker::Alphanumeric.alpha(number: 10),
         admin_user: @admin_user,
-        price_cents: Faker::Number.decimal(l_digits: 5)
+        price_cents: Faker::Number.within(range: 100..1000)
     )
     @product.save
 end

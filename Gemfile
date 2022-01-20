@@ -32,6 +32,9 @@ gem 'activeadmin'
 gem 'money-rails', '~>1.12'
 gem 'awesome_print', '~> 1.8'
 gem 'faraday', '~> 2.1'
+gem 'gon'
+gem 'rabl-rails'
+gem 'country_select'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

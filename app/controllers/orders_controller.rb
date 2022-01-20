@@ -6,8 +6,7 @@ class OrdersController < ApplicationController
 
     def update
         @order = current_order.update(order_params)
-        # @payment = Payment.new(order_params)
-        # @response = @payment.send_trasaction
+        @order = current_order
         redirect_to new_payment_path
     end
 
@@ -15,7 +14,7 @@ class OrdersController < ApplicationController
 
         def order_params
             params.require(:order).permit(:user, :city, 
-                :address, :phone, :zip_code, 
+                :address, :phone, :zip_code, :country,
                 :comment, :transaction_type,
                 :order_info, :order_number, :currency, :payment_id)
         end

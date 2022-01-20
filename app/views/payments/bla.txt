@@ -1,0 +1,40 @@
+<%= simple_form_for(@payment) do |a| %>
+  <%= a.input :card_number, label: "Card Number" %>
+  <%= a.input :cvv, label: "CVV" %>
+  <%= a.input :exp_date, label: "Expiration Date" %>
+  <%= submit_tag "Purchase", :class => "btn pay_submit" %>
+
+<% end %>
+190396cf6c4d9f1b94d7f807f1956f9d9eaad9f0
+
+Order form
+<%= simple_form_for(@order) do |a| %>
+  <%= a.input :address, label: "Address" %>
+  <%= a.input :city, label: "City" %>
+  <%= a.input :zip_code, label: "Zip Code" %>
+  <%= a.input :phone, label: "Phone Number" %>
+  <%= a.input :comment, label: "Leave a comment" %>
+  <%= a.hidden_field :transaction_type, :value => "purchase" %>
+  <%= a.hidden_field :currency, :value => current_order.products.first.currency%>
+  <%= submit_tag "Order", :class => "btn pay_submit" %>
+<% end %>
+
+
+
+          <%= simple_form_for(@order) do |a| %>
+            <%= a.input :address, label: "Address" %>
+            <%= a.input :city, label: "City" %>
+            <%= a.input :zip_code, label: "Zip Code" %>
+            <%= a.input :phone, label: "Phone Number" %>
+            <%= a.input :comment, label: "Leave a comment" %>
+            <%= a.hidden_field :transaction_type, :value => "purchase" %>
+            <%= a.hidden_field :currency, :value => current_order.products.first.currency%>
+            <%= submit_tag "Order", :class => "btn pay_submit" %>
+
+                    session[:order_id] = nil
+
+        gon.session_order = session.delete(:order_id)
+        gon.redirect_to = redirect_to user_url(current_user)
+
+
+    <button>Submit Payment</button>
