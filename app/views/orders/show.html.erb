@@ -1,0 +1,28 @@
+<h2>Order number <%= @order.id%> by <%= @order.user.email%> </h2>
+<h2>Order Unique Number <%= @order.order_number%></h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Product Description</th>
+            <th>Price</th>
+            <th>Currency</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @order.products.each do |product| %>
+            <tr>
+                <td><%=  product.name %></td>
+                <td><%=  product.description %></td>
+                <td><%=  product.price_cents/100 %></td>
+                <td><%=  product.currency %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<%= button_to 'Refund', root_path %>
+
+<br>

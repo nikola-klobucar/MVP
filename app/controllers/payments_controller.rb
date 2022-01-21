@@ -11,7 +11,6 @@ class PaymentsController < ApplicationController
         gon.client_secret = @client_secret
         gon.address = @order.address
         gon.country = @order.country
-        binding.pry
         session[:order_id] = nil
     end
 
@@ -26,6 +25,6 @@ class PaymentsController < ApplicationController
     # private
 
     #     def payment_params
-    #         params.require(:payment).permit(:card_number, :cvv, :exp_date)
+    #         params.require(:payment).permit(:payment_result)
     #     end
 end

@@ -1,14 +1,27 @@
 class OrdersController < ApplicationController
 
-    def index
+    # def index
+    #     @orders = current_order
+    # end
+
+    def edit
         @order = current_order
-        binding.pry
     end
 
     def update
-        @order = current_order.update(order_params)
         @order = current_order
-        redirect_to new_payment_path
+        if @order.update(order_params)
+            @order = current_order
+            redirect_to new_payment_path
+        else
+            render :edit
+        end
+      
+        
+    end
+
+    def show
+        @order = current_user.orders.find(params[:id])
     end
 
     private
