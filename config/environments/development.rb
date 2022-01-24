@@ -75,5 +75,5 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  config.hosts << "d2f3-89-164-107-82.ngrok.io"
+  config.hosts << "b795-89-164-107-82.ngrok.io"
 end

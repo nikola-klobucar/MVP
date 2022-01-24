@@ -23,7 +23,7 @@ class PaymentsController < ApplicationController
                 binding.pry
                 @order.update(payment: @payment)
                 session[:order_id] = nil
-                format.html { redirect_to @order, notice: "Order was successfully ordered" }
+                format.html { redirect_to order_path(@order), notice: "Order was successfully ordered" }
                 format.json { status :created }
             else
                 format.html { redirect_to new_payment_path, notice: "Order was not successfully ordered" }
