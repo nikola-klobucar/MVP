@@ -1,4 +1,4 @@
-var monri = Monri(gon.merchent_key);
+var monri = Monri(gon.merchant_key);
 const client = gon.client_secret;
 var components = monri.components({"clientSecret": client});
 var style = {

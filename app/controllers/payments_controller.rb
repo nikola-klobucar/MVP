@@ -3,27 +3,24 @@ class PaymentsController < ApplicationController
 
     def new
         @payment = Payment.new
-        @order = current_order
-        @response = @order.send_transaction
+        @@order = current_order
+        @response = @@order.send_transaction
         @client_secret = JSON.parse(@response.body)["client_secret"]
-        @order.update(client_secret: @client_secret)
-        gon.merchent_key = Rails.application.credentials.config[:web_pay][:merchent_key]
-        gon.client_secret = @order.client_secret
-        gon.address = @order.address
-        gon.country = @order.country
-        binding.pry
+        @@order.update(client_secret: @client_secret)
+        gon.merchant_key = Rails.application.credentials.config[:web_pay][:merchant_key]
+        gon.client_secret = @@order.client_secret
+        gon.address = @@order.address
+        gon.country = @@order.country
+        session[:order_id] = nil
     end
 
     def create
-        @order = current_order
-        @payment = Payment.new(payment_params)
-        binding.pry
+        @payment = Payment.new(payment_result: request.body.read)
         respond_to do |format|
             if @payment.save
+                @@order.update(payment: @payment)
                 binding.pry
-                @order.update(payment: @payment)
-                session[:order_id] = nil
-                format.html { redirect_to order_path(@order), notice: "Order was successfully ordered" }
+                format.html { redirect_to order_path(@@order), notice: "Order was successfully ordered" }
                 format.json { status :created }
             else
                 format.html { redirect_to new_payment_path, notice: "Order was not successfully ordered" }
@@ -31,11 +28,4 @@ class PaymentsController < ApplicationController
             end
         end
     end
-
-
-    private
-
-        def payment_params
-            params.require(:payment).permit(:id, :created_at, :payment_result)
-        end
 end

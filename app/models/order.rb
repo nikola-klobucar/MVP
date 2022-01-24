@@ -42,9 +42,9 @@ class Order < ApplicationRecord
             "supported_payment_method": ["card"]
         }
         body_as_string = req.to_json
-        merchent_key = Rails.application.credentials.config[:web_pay][:merchent_key]
+        merchant_key = Rails.application.credentials.config[:web_pay][:merchant_key]
         auth_token = Rails.application.credentials.config[:web_pay][:authenticity_token]
-        digest = Digest::SHA2.new(512).hexdigest(merchent_key + time + auth_token + body_as_string)
+        digest = Digest::SHA2.new(512).hexdigest(merchant_key + time + auth_token + body_as_string)
 
         url = 'https://ipgtest.monri.com'
 

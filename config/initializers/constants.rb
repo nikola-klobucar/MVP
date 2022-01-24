@@ -1,1 +1,1 @@
-CURRENCY = ['EUR'].freeze
+CURRENCY = 'EUR'
