@@ -15,6 +15,10 @@ class Product < ApplicationRecord
         term: "%#{params}%")
     end
 
+    def as_json(options={})
+        super(:only => [:name, :description, :price])
+    end
+
     private
         def generate_product_code
             self.product_code = (0...8).map { (65 + rand(26)).chr }.join

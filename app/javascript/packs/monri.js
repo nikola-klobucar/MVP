@@ -1,7 +1,6 @@
-var monri = Monri("c70ec12b1c9518bef9859edd75e0012148391ee7");
+var monri = Monri(gon.merchent_key);
 const client = gon.client_secret;
 var components = monri.components({"clientSecret": client});
-debugger;
 var style = {
     base: {
         // Add your base input styles here. For example:
@@ -70,7 +69,6 @@ form.addEventListener('submit', function (event) {
             errorElement.textContent = result.error.message;
         } else {
             handlePaymentResult(result.result)
-            window.location.replace("/")
         }
     });
 });

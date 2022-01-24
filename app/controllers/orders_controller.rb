@@ -11,7 +11,7 @@ class OrdersController < ApplicationController
     def update
         @order = current_order
         if @order.update(order_params)
-            @order = current_order
+            @order.update(currency: current_order.products.first.currency)
             redirect_to new_payment_path
         else
             render :edit

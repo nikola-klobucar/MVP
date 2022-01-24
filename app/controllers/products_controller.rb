@@ -6,6 +6,11 @@ class ProductsController < ApplicationController
     def index
         @products = Product.all
         @products = @products.search(params[:q].downcase) if params[:q] && !params[:q].empty?
+
+        respond_to do |format|
+            format.html
+            format.json { render :json => @products }
+        end
     end
 
     def show
@@ -17,7 +22,6 @@ class ProductsController < ApplicationController
 
     def create
         @product = Product.new(product_params)
-        binding.pry
         respond_to do |format|
             if @product.save
                 format.html { redirect_to @product, notice: "Product was successfully created"}
