@@ -19,7 +19,6 @@ class PaymentsController < ApplicationController
         respond_to do |format|
             if @payment.save
                 @@order.update(payment: @payment)
-                binding.pry
                 format.html { redirect_to order_path(@@order), notice: "Order was successfully ordered" }
                 format.json { status :created }
             else
