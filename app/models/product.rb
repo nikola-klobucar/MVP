@@ -3,9 +3,8 @@ class Product < ApplicationRecord
 
     validates :name, :price, presence: true
     validates :product_code, uniqueness: true
-    validates :currency, presence: true
 
-    monetize :price, as: :price_cents
+    monetize :price_cents
 
     has_one :order_item
     belongs_to :admin_user
@@ -16,7 +15,7 @@ class Product < ApplicationRecord
     end
 
     def as_json(options={})
-        super(:only => [:name, :description, :price])
+        super(:only => [:name, :description, :price_cents])
     end
 
     private

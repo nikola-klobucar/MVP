@@ -9,7 +9,7 @@ class OrderItem < ApplicationRecord
         if persisted?
             self[:unit_price]
         else
-            product.price_cents/100
+            (product.price_cents).to_f/100
         end
     end
 
