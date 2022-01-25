@@ -5,10 +5,11 @@ class OrderItemsController < ApplicationController
         @order_item = @order.order_items.new(order_items_params)
         @order.user = current_user
         @order.save!
-        session[:order_id] = @order.id
+        session[:order_number] = @order.order_number
     end
 
     def update
+        binding.pry
         @order = current_order
         @order_item = @order.order_items.find(params[:id])
         @order_item.update(order_items_params)

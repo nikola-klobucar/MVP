@@ -1,8 +1,8 @@
 module ApplicationHelper
 
     def current_order
-        if !session[:order_id].nil? && !Order.all.empty?
-            Order.find(session[:order_id])
+        if !session[:order_number].nil? && !Order.all.empty?
+            Order.find_by_order_number(session[:order_number])
         else
             Order.new
         end
