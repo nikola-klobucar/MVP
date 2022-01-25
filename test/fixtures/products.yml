@@ -1,18 +1,18 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+product_one:
   name: MyString
   description: MyText
   specs: MyText
   product_code: MyString
-  price: 100
+  price_cents: 1000
   admin_user: admin
 
-two:
+product_two:
   name: MyString
   description: MyText
   specs: MyText
   product_code: MyString2
-  price: 200
+  price_cents: 2000
   admin_user: admin
 

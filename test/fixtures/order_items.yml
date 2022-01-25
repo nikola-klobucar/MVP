@@ -1,0 +1,11 @@
+order_item_one:
+  product: product_one
+  quantity: 1
+  unit_price: (product_one.price_cents.to_f)/100
+  total_price: unit_price * quantity
+
+order_item_two:
+  product: product_two
+  quantity: 2
+  unit_price: (product_two.price_cents.to_f)/100
+  total_price: unit_price * quantity
