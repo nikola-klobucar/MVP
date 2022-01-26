@@ -1,7 +1,7 @@
 class Product < ApplicationRecord
     before_create :generate_product_code
 
-    validates :name, :price, presence: true
+    validates :name, :price_cents, presence: true
     validates :product_code, uniqueness: true
 
     monetize :price_cents
