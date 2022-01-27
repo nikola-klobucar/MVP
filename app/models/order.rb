@@ -4,8 +4,10 @@ class Order < ApplicationRecord
     belongs_to :user
     belongs_to :payment, optional: true
 
+    validates :order_number, presence: true
+
     before_save :set_subtotal
-    before_create :generate_order_number
+    before_validation :generate_order_number
 
     enum transaction_type: {
         authorize: "authorize",
@@ -13,20 +15,7 @@ class Order < ApplicationRecord
     }
 
     def subtotal
-        @total = 0
-        # order_items.collect { |order_item| order_item.valid? ? (order_item.unit_price * order_item.quantity) : 0}.sum
-        order_items.each do |order_item|
-            price_of_one_item = order_item.unit_price * order_item.quantity
-
-            if price_of_one_item.kind_of? Float
-                @total += price_of_one_item
-            else
-                price_of_one_item = price_of_one_item.cents/100
-                @total += price_of_one_item
-            end
-
-        end
-        return @total
+        order_items.collect { |order_item| order_item.valid? ? (order_item.unit_price * order_item.quantity) : 0}.sum
     end
 
     def send_transaction

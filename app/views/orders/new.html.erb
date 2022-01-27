@@ -1,4 +1,4 @@
-<%= simple_form_for(@order, method: :patch) do |a| %>
+<%= simple_form_for(@order) do |a| %>
   <%= a.input :address, label: "Address" %>
   <%= a.input :country, as: :country %>
   <%= a.hidden_field :transaction_type, :value => "purchase" %>

@@ -1,25 +1,43 @@
 class OrderItemsController < ApplicationController
 
+    def new
+        @order_item = OrderItem.new
+    end
+
     def create
-        @order = current_order
-        @order_item = @order.order_items.new(order_items_params)
-        @order.user = current_user
-        @order.save!
-        session[:order_number] = @order.order_number
+        @order_item = OrderItem.new(order_items_params)
+        respond_to do |format|
+            if @order_item.save
+                format.html { redirect_to root_path}
+                format.json { render :show, status: :created}
+            else
+                format.html { redirect_to new_user_session_path, notice: "You must be signed-in first" }
+                format.json { render json: @order_item.errors, status: :unprocessable_entity}
+            end
+        end
     end
 
     def update
-        @order = current_order
-        @order_item = @order.order_items.find(params[:id])
-        @order_item.update(order_items_params)
-        @order_items = @order.order_items
+        @order_item = OrderItem.find(params[:id])
+
+        respond_to do |format|
+            if @order_item.update(order_items_params)
+                format.html { redirect_to root_path}
+            else
+                format.html { redirect_to new_user_session_path, notice: "You must be signed-in first" }
+                format.json { render json: @order_item.errors, status: :unprocessable_entity}
+            end
+        end
     end
 
     def destroy
-        @order = current_order
-        @order_item = @order.order_items.find(params[:id])
+        @order_item = OrderItem.find(params[:id])
+
         @order_item.destroy
-        @order_items = @order.order_items
+        respond_to do |format|
+            format.html { redirect_to carts_url, notice: "Order Item was successfully destroyed"}
+            format.json { head :no_content}
+        end
     end
 
 

@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
     before_action :set_product, only: [:show, :edit, :update, :destroy]
-    before_action :set_order, only: [:index, :show]
+    before_action :set_item, only: [:index, :show]
     before_action :authenticate_admin_user!, except: [:index, :show]
     
     def index
@@ -24,6 +24,7 @@ class ProductsController < ApplicationController
         @product = Product.new(product_params)
         respond_to do |format|
             if @product.save
+                @product << 
                 format.html { redirect_to @product, notice: "Product was successfully created"}
                 format.json { render :show, status: :created}
               else
@@ -68,7 +69,7 @@ class ProductsController < ApplicationController
             @product = Product.find(params[:id])
         end
 
-        def set_order
-            @order_item = current_order.order_items.new
+        def set_item
+            @order_item = OrderItem.new
         end
 end
