@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
     has_many :order_items, dependent: :destroy
-    has_many :products, through: :order_items
+    has_one :cart
     belongs_to :user
     belongs_to :payment, optional: true
 
