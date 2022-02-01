@@ -6,7 +6,6 @@ class PaymentsController < ApplicationController
     def new
         @payment = Payment.new
         @order = current_order
-        binding.pry
         @response = @order.send_transaction
         @client_secret = JSON.parse(@response.body)["client_secret"]
         @order.update(client_secret: @client_secret)

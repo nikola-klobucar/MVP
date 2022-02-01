@@ -24,7 +24,7 @@ class Order < ApplicationRecord
         req = {
             "amount": (subtotal * 100).to_i,
             "order_number": order_number,
-            "currency": currency.upcase,
+            "currency": CURRENCY,
             "transaction_type": transaction_type,
             "order_info": order_info,
             "scenario": "charge",

@@ -3,12 +3,12 @@ require "test_helper"
 class OrderItemsControllerTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
-  def order
-    orders(:order_one)
-  end
-
   def setup
     sign_in users(:foo)
+  end
+
+  def order_item
+    order_items(:order_item_one)
   end
 
   test "equality of order item and product" do

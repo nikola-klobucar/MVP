@@ -7,12 +7,11 @@ class OrdersController < ApplicationController
     def create
         @order = Order.new(order_params)
         @order.user = current_user
-        @order.currency = OrderItem.first.product.price_currency
+        @order.currency = CURRENCY
         @order.order_items << OrderItem.all   # Moram napraviti Cart model
         respond_to do |format|
             if @order.save
                 session[:order_number] = @order.order_number
-                binding.pry
                 format.html { redirect_to new_payment_path}
                 format.json { render :show, status: :created}
               else
