@@ -21,27 +21,29 @@ class OrderItemsControllerTest < ActionDispatch::IntegrationTest
     assert_difference("OrderItem.count") do
       post order_items_url, params: { order_item: {product_id: products(:product_one).id, quantity: 1}}
     end
+    assert_response :redirect
+    follow_redirect!
     assert_response :success
+    assert_select "h1", "All Products"
   end
 
   test "can update order_item quantity" do
-    post order_items_url, params: { order_item: {product_id: products(:product_one).id, quantity: 1}}
-    assert_response :success
-    @order_item = OrderItem.last
-    @order_item.update(quantity: 2)
-    assert_equal @order_item.total_price, 20
+    updated_quantity = 5
+    # patch order_item_url, params: {order_item: {id: order_item.id, product_id: products(:product_one).id, quantity: updated_quantity}}
+    patch order_item_url(OrderItem.last), params: {order_item: {quantity: updated_quantity}}
 
-    # @order_item = OrderItem.last
-    # assert_difference("OrderItem.last.total_price", 10) do
-    #   patch edit_order_item_url(@order_item), params: {order_item: { quantity: 2}}
-    # end
+    assert_equal updated_quantity, OrderItem.last.quantity
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
   end
 
-  # test "can delete order item" do
-  #   @order_item = order_items(:order_item_one)
-  #   order.order_items.update(@order_item)
-  #   assert_difference("OrderItem.count", -1) do
-  #     delete order_item_path(@order_item)
-  #   end
-  # end
+  test "can delete order item" do
+    assert_difference("OrderItem.count", -1) do
+      delete order_item_url(OrderItem.last)
+    end
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
+  end
 end
