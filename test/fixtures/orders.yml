@@ -1,3 +1,10 @@
 order_one:
-  subtotal: 100
+  subtotal: 5000
   user: foo
+  currency: CURRENCY
+  address: "Address 1"
+  city: "City 1"
+  zip_code: 100000
+  phone: "003851111111"
+  transaction_type: "authorize"
+  order_number: "RandomString"

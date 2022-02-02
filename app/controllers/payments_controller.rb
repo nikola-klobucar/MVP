@@ -1,4 +1,6 @@
 class PaymentsController < ApplicationController
+    include PaymentsHelper
+
     skip_before_action :verify_authenticity_token
 
     def new

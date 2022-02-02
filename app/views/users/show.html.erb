@@ -15,7 +15,7 @@
             <% current_user.orders.each do |o| %>
                 <td>Price: <%= o.subtotal %><br>
                 Address: <%= o.address %><br>
-                Currency: <%= o.products.first.currency %><br>
+                Currency: <%= o.currency %><br>
                 Zip Code: <%= o.zip_code %><br>
                 <%= link_to 'Order', order_path(o) %><br>
                 </td>
