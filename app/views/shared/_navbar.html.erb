@@ -26,11 +26,7 @@
         </li>
         <li class="nav-item">
           <%= link_to "#{current_cart.order_items.all.size} items in cart and price #{
-                  @sum = 0
-                  current_cart.order_items.all.each do |total|
-                  @sum += total.total_price
-                end 
-                @sum
+                  cart_sum(current_cart.order_items)
             
           }", carts_path, class: 'nav-link' %>
         </li>
