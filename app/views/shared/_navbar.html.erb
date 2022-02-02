@@ -25,9 +25,9 @@
           <%= link_to 'Sign Out', destroy_user_session_path, class: 'nav-link', :method => 'delete'%>
         </li>
         <li class="nav-item">
-          <%= link_to "#{OrderItem.all.size} items in cart and price #{
+          <%= link_to "#{current_cart.order_items.all.size} items in cart and price #{
                   @sum = 0
-                OrderItem.all.each do |total|
+                  current_cart.order_items.all.each do |total|
                   @sum += total.total_price
                 end 
                 @sum

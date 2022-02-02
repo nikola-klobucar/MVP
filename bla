@@ -1,0 +1,4 @@
+<% current_cart.order_items.each do |total| %> 
+                          <% @sum += total.total_price%>
+                        <% end %>
+          Total Price:  <%= @sum %>

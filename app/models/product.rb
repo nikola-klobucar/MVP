@@ -6,7 +6,7 @@ class Product < ApplicationRecord
 
     monetize :price_cents
 
-    has_one :order_item, dependent: :destroy
+    has_one :order_item
     belongs_to :admin_user
     
     def self.search(params)

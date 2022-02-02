@@ -8,10 +8,11 @@ class OrdersController < ApplicationController
         @order = Order.new(order_params)
         @order.user = current_user
         @order.currency = CURRENCY
-        @order.order_items << OrderItem.all   # Moram napraviti Cart model
+        @order.order_items << OrderItem.all   # Ovo je iduće za riješiti
         respond_to do |format|
             if @order.save
                 session[:order_number] = @order.order_number
+                binding.pry
                 format.html { redirect_to new_payment_path}
                 format.json { render :show, status: :created}
               else
