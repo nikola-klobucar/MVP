@@ -1,17 +1,20 @@
 language: ruby
 cache:
-  - bundler
-  - yarn
+- bundler
+- yarn
 services:
-  - postgresql
+- postgresql
 before_install:
-  - echo "$RAILS_MASTER_KEY" > config/master.key
-  - nvm install --lts
+- echo "$RAILS_MASTER_KEY" > config/master.key
+- nvm install --lts
 before_script:
-  - bundle install --jobs=3 --retry=3
-  - yarn
-  - bundle exec rake db:create
-  - bundle exec rake db:schema:load
+- bundle install --jobs=3 --retry=3
+- yarn
+- bundle exec rake db:create
+- bundle exec rake db:schema:load
 script:
-  - bundle exec rake test
-  - bundle exec rake test:system
+- bundle exec rake test
+- bundle exec rake test:system
+env:
+  global:
+    secure: MG+lWC20lN3Ny6VtBbt1qxAkM2vCuJRB5tjkGtJc0g6MUo6R2pe4eHmjlZD8vENX6kWWDjQ1+wfUXQGITUtlRDqctAUqDqMEIUFXLXI7Z0USjcwzKAh8Vd5lPPOI9RqoayaVAtUVj3aSwNoI8h7ryFn52edjiVDKw9TrEP/jYGDgpqcSLiOrRf6givjIP6oa4EMZJN334yCXw//hyA4nsrwbxq8cp+N/tLiW7ufj9rqPF+OW0VcUosqUWBzZ5HLVzs3gQh6Yc+fMJd8TIKYGqd4YrirD+vYQdJu6lOUvIHYtQ+w3bKVNvo4dnR0+gum/adjZQYNlqk+YMcMbzNExm/UlT1XWWGhujT21im3jCUpOuVKFJsCqzs8i2Ak1SgJsjAPfUET6R9l/2kpq0cLcH/Ub2KklqkSSmbaLoBXCDAfqm41yjI056Mzne1D2GImdfcDTlfrK6eRNz0yRb/97Ej9RhpnJGscq7JSgLeYZKKby9RQfZoMMKcCnzh+iUnf5v9aHLpFkknftzpEwURXNiqmHlW5LY+Vwe29o3uUKryZS3VcVbuURSj4D5dctHwC/S/YDl0+F1HrCv8+uOQEq6iNZIsAOm2WI0xYUcdGd41jPRdjS0wv07A+8Oqiz3cOwoPxd+yK1NCaVMEXX95Ko3ls2v64nZxBM8N0lg1evZNY=
