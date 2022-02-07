@@ -29,7 +29,6 @@ class OrderItemsControllerTest < ActionDispatch::IntegrationTest
 
   test "can update order_item quantity" do
     updated_quantity = 5
-    # patch order_item_url, params: {order_item: {id: order_item.id, product_id: products(:product_one).id, quantity: updated_quantity}}
     patch order_item_url(OrderItem.last), params: {order_item: {quantity: updated_quantity}}
 
     assert_equal updated_quantity, OrderItem.last.quantity

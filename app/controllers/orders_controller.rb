@@ -8,11 +8,10 @@ class OrdersController < ApplicationController
         @order = Order.new(order_params)
         @order.user = current_user
         @order.currency = CURRENCY
-        @order.order_items << OrderItem.all   # Ovo je iduće za riješiti
+        @order.cart = current_cart
         respond_to do |format|
             if @order.save
                 session[:order_number] = @order.order_number
-                binding.pry
                 format.html { redirect_to new_payment_path}
                 format.json { render :show, status: :created}
               else
@@ -26,21 +25,6 @@ class OrdersController < ApplicationController
     def show
         @order = current_user.orders.find(params[:id])
     end
-
-    # def edit
-    # end
-
-    # def update
-    #     binding.pry
-    #     if @order.update(order_params)
-    #         @order.update(currency: CURRENCY)
-    #         redirect_to new_payment_path
-    #     else
-    #         render :edit
-    #     end
-      
-        
-    # end
 
     private
 
