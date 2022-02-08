@@ -1,6 +1,6 @@
 class OrderItem < ApplicationRecord
     belongs_to :product
-    belongs_to :cart, optional: true, touch: true
+    belongs_to :cart, optional: true
 
     before_save :set_unit_price
     before_save :set_total_price

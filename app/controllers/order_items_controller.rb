@@ -23,7 +23,6 @@ class OrderItemsController < ApplicationController
             respond_to do |format|
                 if @order_item.save
                     current_cart.order_items << @order_item
-                    debugger
                     format.html { redirect_to root_path}
                     format.json { render :new, status: :created}
                 else
