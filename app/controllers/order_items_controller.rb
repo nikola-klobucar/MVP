@@ -1,52 +1,30 @@
 class OrderItemsController < ApplicationController
+    include OrderItemsHelper
 
     def new
         @order_item = OrderItem.new
     end
 
     def create
-        @order_item = OrderItem.new(order_items_params)
-        if current_cart.order_items.include?(OrderItem.find_by_product_id(@order_item.product_id))
-            @existing_item = current_cart.order_items.find_by_product_id(order_items_params["product_id"])
-            @new_quantity = @order_item.quantity
-            @existing_item.quantity += @new_quantity
-            respond_to do |format|
-                if @existing_item.save
-                    format.html { redirect_to root_path}
-                    format.json { render :new, status: :updated}
-                else
-                    format.html { redirect_to new_user_session_path, notice: "You must be signed-in first" }
-                    format.json { render json: @existing_item.errors, status: :unprocessable_entity}
-                end
+        respond_to do |format|
+            if save_new_or_existing_order_item(order_items_params)
+                format.html { redirect_to root_path}
+                format.json { render :new, status: :created}
+            else
+                format.html { redirect_to new_user_session_path, notice: "You must be signed-in first" }
+                format.json { render json: @order_item.errors, status: :unprocessable_entity}
             end
-        else
-            respond_to do |format|
-                if @order_item.save
-                    current_cart.order_items << @order_item
-                    format.html { redirect_to root_path}
-                    format.json { render :new, status: :created}
-                else
-                    format.html { redirect_to new_user_session_path, notice: "You must be signed-in first" }
-                    format.json { render json: @order_item.errors, status: :unprocessable_entity}
-                end
-            end            
         end
     end
 
     def update
-        @order_item = OrderItem.find(params[:id])
-        unless @order_item.cart == current_cart  # Logika za prolazak testova
-            @order_item.cart = current_cart
-            current_cart.order_items << @order_item
-        end
-        if current_cart.order_items.include?(OrderItem.find_by_product_id(@order_item.product_id))  # Actual logika za update
-            respond_to do |format|
-                if @order_item.update(order_items_params)
-                    format.html { redirect_to root_path}
-                else
-                    format.html { redirect_to new_user_session_path, notice: "You must be signed-in first" }
-                    format.json { render json: @order_item.errors, status: :unprocessable_entity}
-                end
+        respond_to do |format|
+            if update_existing_order_item(order_items_params)
+                format.html { redirect_to root_path}
+                format.json { render :edit, status: :updated}
+            else
+                format.html { redirect_to new_user_session_path, notice: "You must be signed-in first" }
+                format.json { render json: @order_item.errors, status: :unprocessable_entity}
             end
         end
     end
