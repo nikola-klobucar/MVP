@@ -35,5 +35,7 @@ class PaymentsTest < ApplicationSystemTestCase
     text = page.driver.browser.switch_to.alert.text
     assert_equal text, "Transaction approved"
     page.driver.browser.switch_to.alert.accept
+    assert_current_path("/")
+    assert_selector "h1", text: "All Products"
   end
 end

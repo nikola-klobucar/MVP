@@ -5,26 +5,17 @@ class PaymentsController < ApplicationController
 
     def new
         @payment = Payment.new
-        @order = current_order
-        @response = @order.send_transaction
-        @client_secret = JSON.parse(@response.body)["client_secret"]
-        @order.update(client_secret: @client_secret)
-        gon.merchant_key = Rails.application.credentials.config[:web_pay][:merchant_key]
-        gon.client_secret = @order.client_secret
-        gon.address = @order.address
-        gon.country = @order.country
-        session[:order_number] = nil
+        set_up_credit_card_form
     end
 
     def create
-        @parsed_request = JSON.parse(request.body.read)
-        @payment = Payment.new(payment_result: @parsed_request)
-        session[:order_number] = @parsed_request["custom_params"]
-        @order = current_order
+        @payment = Payment.new(:payment_result => params[:payment_result])
         respond_to do |format|
-            if @payment.save
+            if @payment.save!
+                @order = current_cart.order
                 @order.update(payment: @payment)
-                format.html { redirect_to products_path, notice: "Order was successfully ordered" }
+                Rails.cache.delete(cache_key)
+                format.html { redirect_to root_path, notice: "Order was successfully ordered" }
                 format.json { status :created }
             else
                 format.html { redirect_to new_payment_path, notice: "Order was not successfully ordered" }
@@ -32,4 +23,10 @@ class PaymentsController < ApplicationController
             end
         end
     end
+
+
+    private
+        def payment_params
+            params.require(:payment).permit(:payment_result)
+        end
 end
