@@ -1,15 +1,15 @@
 class OrderItemsController < ApplicationController
+    include OrderItemsHelper
 
     def new
         @order_item = OrderItem.new
     end
 
     def create
-        @order_item = OrderItem.new(order_items_params)
         respond_to do |format|
-            if @order_item.save
+            if save_new_or_existing_order_item(order_items_params)
                 format.html { redirect_to root_path}
-                format.json { render :show, status: :created}
+                format.json { render :new, status: :created}
             else
                 format.html { redirect_to new_user_session_path, notice: "You must be signed-in first" }
                 format.json { render json: @order_item.errors, status: :unprocessable_entity}
@@ -18,11 +18,10 @@ class OrderItemsController < ApplicationController
     end
 
     def update
-        @order_item = OrderItem.find(params[:id])
-
         respond_to do |format|
-            if @order_item.update(order_items_params)
+            if update_existing_order_item(order_items_params)
                 format.html { redirect_to root_path}
+                format.json { render :edit, status: :updated}
             else
                 format.html { redirect_to new_user_session_path, notice: "You must be signed-in first" }
                 format.json { render json: @order_item.errors, status: :unprocessable_entity}
@@ -43,6 +42,6 @@ class OrderItemsController < ApplicationController
 
     private
         def order_items_params
-            params.require(:order_item).permit(:product_id, :quantity)
+            params.require(:order_item).permit(:product_id, :quantity, :cart_id)
         end
 end

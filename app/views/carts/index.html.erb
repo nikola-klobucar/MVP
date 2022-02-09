@@ -1,4 +1,4 @@
-<% if !@order_item.nil? && @order_item.errors.any? %>
+<% if errors? %>
   <ul>
     <% @order_item.errors.full_messages.each do |msg| %>
         <li> <%= msg %> </li>
@@ -6,8 +6,8 @@
   </ul>
 <% end %>
 
-<% if @order_items.size > 0 %>
-  <% @order_items.each do |item| %>
+<% if current_cart.order_items.size > 0 %>
+  <% current_cart.order_items.each do |item| %>
     <% @sum = 0%>
     <tr>
         <td><%=  item.product.name %></td>
@@ -17,6 +17,7 @@
         <td>
             <%= form_for(item, remote: true, method: :patch) do |f| %>
                 <%= f.hidden_field :product_id, value: item.product.id %>
+                <%= f.hidden_field :cart_id, value: item.cart.id %>
                 <%=  (item.product.price_cents).to_f/100 %>
                 <%= f.text_field :quantity, value: item.quantity.to_i, min: 1, class: 'form-control' %>
                 <%= f.submit "Update Quantity", class: 'btn btn-primary' %>
@@ -24,10 +25,8 @@
             <% end %>
         </td>
     </tr>
-    <span>              <% @order_items.each do |total| %> 
-                          <% @sum += total.total_price%>
-                        <% end %>
-          Total Price:  <%= @sum %>
+    <span>              
+          Total Price: <%= cart_sum(current_cart.order_items) %>
     </span>
 
   <% end %>

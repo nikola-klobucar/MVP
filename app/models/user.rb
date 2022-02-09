@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
 
   has_many :orders, dependent: :destroy
-
+  has_many :carts, dependent: :destroy
   def send_purchased_email
     UserMailer.purchased(self).deliver_later
   end

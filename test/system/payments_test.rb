@@ -3,18 +3,16 @@ require "application_system_test_case"
 class PaymentsTest < ApplicationSystemTestCase
 
   test "Transaction is successful" do
-    # User is logged in
-    user = User.new(email: 'nikola@example.com', password: "password", password_confirmation: "password")
-    user.save!
+    # Signing in the user
     Capybara.reset_sessions!
     visit new_user_session_path
     assert :success
-    fill_in 'Email', with: 'nikola@example.com'
+    fill_in 'Email', with: 'foo@bar.com'
     fill_in 'Password', with: "password"
     click_button 'Log in'
     assert_selector "h1", text: "All Products"
     
-    # Products are added and order details filled
+    # Product is added and order details filled
     first(:button, "Add to cart").click
     assert_current_path("/")
     visit carts_path

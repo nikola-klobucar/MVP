@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show]
   resources :order_items
-  resource :carts, only: [:show]
+  resources :carts, only: [:index, :new, :create]
   resources :orders
   resources :payments, only: [:new, :create]
   resource :refunds, only: [:show]

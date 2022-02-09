@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
         @order = Order.new(order_params)
         @order.user = current_user
         @order.currency = CURRENCY
-        @order.order_items << OrderItem.all   # Moram napraviti Cart model
+        @order.cart = current_cart
         respond_to do |format|
             if @order.save
                 session[:order_number] = @order.order_number
@@ -25,21 +25,6 @@ class OrdersController < ApplicationController
     def show
         @order = current_user.orders.find(params[:id])
     end
-
-    # def edit
-    # end
-
-    # def update
-    #     binding.pry
-    #     if @order.update(order_params)
-    #         @order.update(currency: CURRENCY)
-    #         redirect_to new_payment_path
-    #     else
-    #         render :edit
-    #     end
-      
-        
-    # end
 
     private
 
