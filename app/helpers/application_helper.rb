@@ -14,8 +14,6 @@ module ApplicationHelper
     if cache_key.nil? || payment_present?
       current_user.carts.where(:order => nil).destroy_all
       Cart.create(user: current_user, order: nil)
-    else
-      @cart = Cart.cached_find(current_user, cache_key)
     end
     @cart = Cart.cached_find(current_user, cache_key)
   end

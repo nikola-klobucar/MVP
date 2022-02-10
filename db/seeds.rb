@@ -9,8 +9,8 @@ puts "Creating a users"
 
 puts "Creating an admin"
 
-@admin_user = AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
-
+@admin_user = AdminUser.new(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
+@admin_user.save!
 puts "Creating products"
 
 10.times do
@@ -22,6 +22,6 @@ puts "Creating products"
         admin_user: @admin_user,
         price_cents: Faker::Number.within(range: 100..1000)
     )
-    @product.save
+    @product.save!
 end
 
