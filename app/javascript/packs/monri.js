@@ -77,12 +77,12 @@ function handlePaymentResult(paymentResult) {
     // Handle PaymentResult
     if (paymentResult.status == 'approved') {
         alert("Transaction approved")
-        jQuery.ajax({
-            data: "payment_result=" + paymentResult.amount,
-            dataType: 'script',
-            type: 'post',
-            url: "/payments"
-          });
+        // jQuery.ajax({
+        //     data: "payment_result=" + paymentResult.amount,
+        //     dataType: 'script',
+        //     type: 'post',
+        //     url: "/payments"
+        //   });
     } else {
         alert("Transaction declined")
     }

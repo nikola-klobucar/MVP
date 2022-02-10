@@ -22,7 +22,7 @@ ActiveAdmin.register Product do
 
   form do |f|
     f.inputs :name, :description, :specs, :price_cents, :sold, :admin_user
-    actions
+    f.actions
   end
   
 end

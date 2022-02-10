@@ -1,5 +1,7 @@
 require "test_helper"
 
+# TODO CHECK THE DATABASE
+
 class OrderItemsControllerTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 

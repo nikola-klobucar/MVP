@@ -9,10 +9,11 @@ class PaymentsController < ApplicationController
     end
 
     def create
-        @payment = Payment.new(:payment_result => params[:payment_result])
+        @parsed_request = JSON.parse(request.body.read)
+        @payment = Payment.new(payment_result: @parsed_request)
         respond_to do |format|
             if @payment.save!
-                @order = current_cart.order
+                @order = Cart.find_by_id(@parsed_request["custom_params"]).order
                 @order.update(payment: @payment)
                 Rails.cache.delete(cache_key)
                 format.html { redirect_to root_path, notice: "Order was successfully ordered" }

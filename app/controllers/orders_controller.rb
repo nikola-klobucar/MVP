@@ -11,7 +11,6 @@ class OrdersController < ApplicationController
         @order.cart = current_cart
         respond_to do |format|
             if @order.save
-                session[:order_number] = @order.order_number
                 format.html { redirect_to new_payment_path}
                 format.json { render :show, status: :created}
               else

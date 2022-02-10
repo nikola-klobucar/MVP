@@ -37,5 +37,6 @@ class PaymentsTest < ApplicationSystemTestCase
     page.driver.browser.switch_to.alert.accept
     assert_current_path("/")
     assert_selector "h1", text: "All Products"
+    #TODO Assert that Product is in the database
   end
 end
