@@ -16,6 +16,7 @@ module PaymentsHelper
         gon.client_secret = @order.client_secret
         gon.address = @order.address
         gon.country = @order.country
+        gon.response_status = JSON.parse(@response.body)["status"]
     end
     
 end

@@ -22,7 +22,7 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
         }
       }
     end
-    assert_equal session[:order_number], Order.last.order_number
+    assert_equal Cart.first.order.order_number, Order.last.order_number
     assert_response :redirect
     follow_redirect!
     assert_response :success

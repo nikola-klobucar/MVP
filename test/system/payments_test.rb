@@ -35,8 +35,14 @@ class PaymentsTest < ApplicationSystemTestCase
     text = page.driver.browser.switch_to.alert.text
     assert_equal text, "Transaction approved"
     page.driver.browser.switch_to.alert.accept
-    assert_current_path("/")
-    assert_selector "h1", text: "All Products"
-    #TODO Assert that Product is in the database
+    document = Nokogiri::XML(body)
+    links = document.css('script')
+    link = links.first
+    approval_message = link.children[1].content["approved"]
+    assert_equal "approved", approval_message
+    @parsed_request = {"id"=>385132, "acquirer"=>"xml-sim", "order_number"=>"672886d80bbe4843b32d1644582021", "order_info"=>"Testna trx", "amount"=>1000, "currency"=>"EUR", "ch_full_name"=>"Test Test", "outgoing_amount"=>7524, "outgoing_currency"=>"HRK", "approval_code"=>"936436", "response_code"=>"0000", "response_message"=>"transaction approved", "reference_number"=>"809772", "systan"=>"385132", "eci"=>"06", "xid"=>nil, "acsv"=>nil, "cc_type"=>"visa", "status"=>"approved", "created_at"=>"2022-02-11T13:20:23.797+01:00", "transaction_type"=>"purchase", "enrollment"=>"N", "authentication"=>nil, "pan_token"=>nil, "ch_email"=>"tester+components_sdk@monri.com", "masked_pan"=>"411111-xxx-xxx-1111", "issuer"=>"xml-sim", "number_of_installments"=>nil, "custom_params"=>"195266743", "expiration_date"=>"3212"}
+    assert_difference("Payment.count") do
+      Payment.create(payment_result: @parsed_request)
+    end
   end
 end
