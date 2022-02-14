@@ -5,6 +5,6 @@ class Cart < ApplicationRecord
   has_many :order_items, dependent: :destroy
 
   def self.cached_find(current_user, cache_key)
-    Rails.cache.fetch(cache_key, expires_in: 5.minutes) {find(current_user.carts.last.id)}
+    Rails.cache.fetch(cache_key, expires_in: 10.minutes) {find(current_user.carts.last.id)}
   end
 end

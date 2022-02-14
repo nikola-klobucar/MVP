@@ -1,5 +1,7 @@
 require "test_helper"
 
+# TODO CHECK THE DATABASE
+
 class OrderItemsControllerTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
@@ -21,6 +23,7 @@ class OrderItemsControllerTest < ActionDispatch::IntegrationTest
     assert_difference("OrderItem.count") do
       post order_items_url, params: { order_item: {product_id: products(:product_one).id, quantity: 1}}
     end
+    assert_equal 1, OrderItem.last.quantity
     assert_response :redirect
     follow_redirect!
     assert_response :success

@@ -28,7 +28,7 @@ class Order < ApplicationRecord
             "order_info": order_info,
             "scenario": "charge",
             "supported_payment_method": ["card"],
-            "custom_params": order_number
+            "custom_params": cart[:id].to_s
         }
 
         body_as_string = req.to_json

@@ -10,6 +10,7 @@ module OrderItemsHelper
         unless @same_product
           next
         end
+        
         return true if @same_product == true
       end
     end
