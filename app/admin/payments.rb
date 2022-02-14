@@ -5,5 +5,9 @@ ActiveAdmin.register Payment do
       column :payment_result
       actions
     end
-    
+
+    form do |f|
+      f.inputs :refund
+      f.actions
+    end
   end
