@@ -68,7 +68,7 @@ form.addEventListener('submit', function (event) {
             var errorElement = document.getElementById('card-errors');
             errorElement.textContent = result.error.message;
         } else {
-            handlePaymentResult(result.result)
+            // handlePaymentResult(result.result)
         }
     });
 });

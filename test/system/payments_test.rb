@@ -32,9 +32,6 @@ class PaymentsTest < ApplicationSystemTestCase
     #Submitting
     click_button 'Submit Payment'
     sleep(2)
-    text = page.driver.browser.switch_to.alert.text
-    assert_equal text, "Transaction approved"
-    page.driver.browser.switch_to.alert.accept
     document = Nokogiri::XML(body)
     links = document.css('script')
     link = links.first

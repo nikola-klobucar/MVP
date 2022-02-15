@@ -15,7 +15,6 @@ class PaymentsController < ApplicationController
             if @payment.save!
                 @order = Cart.find_by_id(@parsed_request["custom_params"]).order
                 @order.update(payment: @payment)
-                Rails.cache.delete(cache_key)
                 format.html { redirect_to root_path, notice: "Order was successfully ordered" }
                 format.json { status :created }
             else
@@ -28,6 +27,6 @@ class PaymentsController < ApplicationController
 
     private
         def payment_params
-            params.require(:payment).permit(:payment_result)
+            params.require(:payment).permit(:payment_result, :refund)
         end
 end

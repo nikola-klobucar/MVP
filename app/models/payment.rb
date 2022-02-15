@@ -2,37 +2,48 @@ class Payment < ApplicationRecord
     has_one :order, dependent: :destroy
 
     def refund
+        @hashed_payment_result = eval(payment_result)
+
         time = Time.now.to_i.to_s
 
         req = {
-            "id": "385654",
+            "id": @hashed_payment_result["id"].to_s,
+            "order_number": @hashed_payment_result["order_number"],
             "transaction_type": "refund",
+            "authenticity-token": Rails.application.credentials.config[:web_pay][:authenticity_token],
+            "amount": @hashed_payment_result["amount"].to_s,
+            "currency": @hashed_payment_result["currency"]
         }
-
-        body_as_string = req.to_json
-        merchent_key = 'key-942fe42f1cdbf1700b5b784532f6181c'
-        auth_token = 'c70ec12b1c9518bef9859edd75e0012148391ee7'
-        digest = Digest::SHA2.new(512).hexdigest(merchent_key + time + auth_token + body_as_string)
+        
+        
+        merchent_key = Rails.application.credentials.config[:web_pay][:merchant_key]
+        digest = Digest::SHA1.new.hexdigest(merchent_key + req[:order_number] + req[:amount] + req[:currency])
+        
+        req["digest"] = digest
+        body_as_xml = req.to_xml(:root => 'transaction')
 
         # ---------------------
-        # Od ovog dijela radim requestove
+        # Doing requests after this line
         # ---------------------
-
-
+        
+        
         url = 'https://ipgtest.monri.com'
-
+        
         glava = {
-            "Content-Type" => "application/json",
-            "Content-Length" => body_as_string.length.to_s,
-            "Authorization" => "WP3-v2 " + auth_token + " " + time + " " + digest 
+            "Content-Type" => "application/xml",
+            "Content-Length" => body_as_xml.length.to_s,
+            "Authorization" => "WP3-v2 " + req[:"authenticity-token"] + " " + time + " " + digest 
         }
-
+        
         conn = Faraday.new(
             url: url
         )
+        response = conn.post("transactions/#{req["id"]}/refund.xml", body_as_xml, glava)
 
-        response = conn.post("transactions/#{req[:id]}/refund", body_as_string, glava)
-
-        binding.pry
+        if response.status == 200
+            true
+        else
+            false
+        end
     end
 end
