@@ -1,7 +1,7 @@
 class Payment < ApplicationRecord
     has_one :order, dependent: :destroy
 
-    def or_your_money_back
+    def refund
         @hashed_payment_result = eval(payment_result)
 
         time = Time.now.to_i.to_s
