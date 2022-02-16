@@ -7,11 +7,11 @@ require "active_support/all"
 time = Time.now.to_i.to_s
 
 req = {
-    "id": "385654",
-	"order_number": "e5a9929065ee860e9d221644844371",
+    "id": "386146",
+	"order_number": "5a78def973671583b9a61644937547",
 	"transaction_type": "refund",
     "authenticity-token": 'c70ec12b1c9518bef9859edd75e0012148391ee7',
-    "amount": "943",
+    "amount": "1000",
     "currency": "EUR"
 }
 

@@ -1,7 +1,7 @@
 class Payment < ApplicationRecord
     has_one :order, dependent: :destroy
 
-    def refund
+    def or_your_money_back
         @hashed_payment_result = eval(payment_result)
 
         time = Time.now.to_i.to_s
@@ -14,7 +14,6 @@ class Payment < ApplicationRecord
             "amount": @hashed_payment_result["amount"].to_s,
             "currency": @hashed_payment_result["currency"]
         }
-        
         
         merchent_key = Rails.application.credentials.config[:web_pay][:merchant_key]
         digest = Digest::SHA1.new.hexdigest(merchent_key + req[:order_number] + req[:amount] + req[:currency])
@@ -38,12 +37,6 @@ class Payment < ApplicationRecord
         conn = Faraday.new(
             url: url
         )
-        response = conn.post("transactions/#{req["id"]}/refund.xml", body_as_xml, glava)
-
-        if response.status == 200
-            true
-        else
-            false
-        end
+        response = conn.post("/transactions/#{req[:id]}/refund.xml", body_as_xml, glava)
     end
 end
