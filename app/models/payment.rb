@@ -38,5 +38,11 @@ class Payment < ApplicationRecord
             url: url
         )
         response = conn.post("/transactions/#{req[:id]}/refund.xml", body_as_xml, glava)
+
+        if response.status == 200
+            true
+        else
+            false
+        end
     end
 end
