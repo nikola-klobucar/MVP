@@ -1,7 +1,7 @@
 class Payment < ApplicationRecord
     has_one :order, dependent: :destroy
 
-    def refund
+    def refund_functionality
         @hashed_payment_result = eval(payment_result)
 
         time = Time.now.to_i.to_s
@@ -38,11 +38,5 @@ class Payment < ApplicationRecord
             url: url
         )
         response = conn.post("/transactions/#{req[:id]}/refund.xml", body_as_xml, glava)
-
-        if response.status == 200
-            true
-        else
-            false
-        end
     end
 end

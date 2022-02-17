@@ -12,7 +12,7 @@ ActiveAdmin.register Payment do
 
       respond_to do |format|
         if @payment.update(permitted_params[:payment])
-          @payment.refund
+          @payment.refund_functionality
           format.html { redirect_to admin_payment_path(@payment), notice: "Payment was successfully updated"}
           format.json { render :show, status: :created}
         else
