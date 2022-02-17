@@ -2,7 +2,8 @@ class Payment < ApplicationRecord
     has_one :order, dependent: :destroy
 
     def refund_functionality
-        @hashed_payment_result = eval(payment_result)
+
+        @hashed_payment_result = JSON.parse(payment_result)
 
         time = Time.now.to_i.to_s
 
