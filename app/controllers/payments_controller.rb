@@ -9,11 +9,11 @@ class PaymentsController < ApplicationController
     end
 
     def create
-        @parsed_request = JSON.parse(request.body.read)
+        @parsed_request = request.body.read
         @payment = Payment.new(payment_result: @parsed_request)
         respond_to do |format|
-            if @payment.save!
-                @order = Cart.find_by_id(@parsed_request["custom_params"]).order
+            if @payment.save
+                @order = Cart.find_by_id(JSON.parse(@parsed_request)["custom_params"]).order
                 @order.update(payment: @payment)
                 format.html { redirect_to root_path, notice: "Order was successfully ordered" }
                 format.json { status :created }
