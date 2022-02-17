@@ -28,7 +28,7 @@ class Payment < ApplicationRecord
         
         url = 'https://ipgtest.monri.com'
         
-        glava = {
+        headers = {
             "Content-Type" => "application/xml",
             "Content-Length" => body_as_xml.length.to_s,
             "Authorization" => "WP3-v2 " + req[:"authenticity-token"] + " " + time + " " + digest 
@@ -37,6 +37,6 @@ class Payment < ApplicationRecord
         conn = Faraday.new(
             url: url
         )
-        response = conn.post("/transactions/#{req[:id]}/refund.xml", body_as_xml, glava)
+        response = conn.post("/transactions/#{req[:id]}/refund.xml", body_as_xml, headers)
     end
 end

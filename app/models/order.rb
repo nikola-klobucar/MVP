@@ -38,7 +38,7 @@ class Order < ApplicationRecord
 
         url = 'https://ipgtest.monri.com'
 
-        glava = {
+        headers = {
             "Content-Type" => "application/json",
             "Content-Length" => body_as_string.length.to_s,
             "Authorization" => "WP3-v2 " + auth_token + " " + time + " " + digest 
@@ -48,7 +48,7 @@ class Order < ApplicationRecord
             url: url
         )
 
-        return conn.post('/v2/payment/new', body_as_string, glava)
+        return conn.post('/v2/payment/new', body_as_string, headers)
     end
 
     private
