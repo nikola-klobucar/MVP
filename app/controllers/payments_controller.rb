@@ -9,13 +9,12 @@ class PaymentsController < ApplicationController
     end
 
     def create
-        @parsed_request = JSON.parse(request.body.read)
-        @payment = Payment.new(payment_result: @parsed_request)
+        @raw_request = request.body.read
+        @payment = Payment.new(payment_result: @raw_request)
         respond_to do |format|
-            if @payment.save!
-                @order = Cart.find_by_id(@parsed_request["custom_params"]).order
+            if @payment.save
+                @order = Cart.find_by_id(JSON.parse(@raw_request)["custom_params"]).order
                 @order.update(payment: @payment)
-                Rails.cache.delete(cache_key)
                 format.html { redirect_to root_path, notice: "Order was successfully ordered" }
                 format.json { status :created }
             else
@@ -28,6 +27,6 @@ class PaymentsController < ApplicationController
 
     private
         def payment_params
-            params.require(:payment).permit(:payment_result)
+            params.require(:payment).permit(:payment_result, :refund)
         end
 end

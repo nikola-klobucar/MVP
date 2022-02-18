@@ -1,9 +1,37 @@
 ActiveAdmin.register Payment do
-  
-    index do
-      selectable_column
-      column :payment_result
-      actions
+  permit_params :refund
+
+  controller do
+
+    def edit
+      @payment = Payment.find(permitted_params[:id])
     end
-    
+
+    def update
+      @payment = Payment.find(permitted_params[:id])
+
+      respond_to do |format|
+        if @payment.update(permitted_params[:payment])
+          @payment.refund_functionality
+          format.html { redirect_to admin_payment_path(@payment), notice: "Payment was successfully updated"}
+          format.json { render :show, status: :created}
+        else
+          format.html { render :new }
+          format.json { render json: @payment.errors, status: :unprocessable_entity}
+        end
+      end
+    end
   end
+  
+  index do
+    selectable_column
+    column :payment_result
+    column :refund?
+    actions
+  end
+
+  form do |f|
+    f.inputs :refund
+    f.actions
+  end
+end

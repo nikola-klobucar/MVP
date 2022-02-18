@@ -1,8 +1,8 @@
 require "application_system_test_case"
 
-class PaymentsTest < ApplicationSystemTestCase
+class AdminUserRefundTest < ApplicationSystemTestCase
 
-  test "Transaction is successful" do
+  test "Refund is successful" do
     # Signing in the user
     Capybara.reset_sessions!
     visit new_user_session_path
@@ -41,5 +41,31 @@ class PaymentsTest < ApplicationSystemTestCase
     assert_difference("Payment.count") do
       Payment.create(payment_result: @parsed_request)
     end
+
+    # Signing in the Admin User
+    Capybara.reset_sessions!
+    visit new_admin_user_session_path
+    assert :success
+    fill_in 'Email', with: 'admin@example.com'
+    fill_in 'Password', with: "password"
+    click_button 'Login'
+    assert_selector "h2", text: "Dashboard"
+
+    #Go to Edit Payment
+    click_link "Payments"
+    assert_selector "h2", text: "Payments"
+    click_link "View"
+    page.assert_selector('th', text: 'REFUND')
+    page.assert_selector('td', text: 'NO')
+    click_link "Edit"
+    assert_selector "h2", text: "Edit Payment"
+
+    # Refund
+    check "Refund"
+    click_button "Update Payment"
+    assert_equal 200, Payment.last.refund_functionality.status
+    page.assert_selector('th', text: 'REFUND')
+    page.assert_selector('td', text: 'YES')
+    assert_selector "h2", text: "Payment #1"
   end
 end
