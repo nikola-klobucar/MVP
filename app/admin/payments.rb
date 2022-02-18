@@ -15,10 +15,8 @@ ActiveAdmin.register Payment do
 
     def update
       @payment = Payment.find(permitted_params[:id])
-
       respond_to do |format|
-        if @payment.refund_functionality.status == 200
-          @payment.update(permitted_params[:payment])
+        if @payment.update(permitted_params[:payment])
           format.html { redirect_to admin_payment_path(@payment), notice: "Payment was successfully updated"}
           format.json { render :show, status: :created}
         else

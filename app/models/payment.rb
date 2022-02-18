@@ -1,5 +1,10 @@
-class Payment < ApplicationRecord
+class Payment < ApplicationRecord 
     has_one :order, dependent: :destroy
+    before_update :validate_successful_refund
+
+    def validate_successful_refund
+      refund_functionality.status == 200
+    end
 
     def refund_functionality
 
