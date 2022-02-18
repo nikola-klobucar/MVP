@@ -16,12 +16,14 @@ ActiveAdmin.register Payment do
     def update
       @payment = Payment.find(permitted_params[:id])
       respond_to do |format|
-        if @payment.update(permitted_params[:payment])
+        if @payment.validate_successful_refund
+          @payment.update(permitted_params[:payment])
           format.html { redirect_to admin_payment_path(@payment), notice: "Payment was successfully updated"}
-          format.json { render :show, status: :created}
+          format.json { render :show, status: :updated}
         else
-          format.html { render :new }
-          format.json { render json: @payment.errors, status: :unprocessable_entity}
+          format.html { render :edit}
+          format.json { render json: @payment.errors.full_messages, status: :unprocessable_entity}
+          flash.now[:notice] = "Refund has been unsuccessful"
         end
       end
     end
