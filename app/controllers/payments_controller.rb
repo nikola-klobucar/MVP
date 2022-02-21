@@ -15,10 +15,10 @@ class PaymentsController < ApplicationController
             if @payment.save
                 @order = Cart.find_by_id(JSON.parse(@raw_request)["custom_params"]).order
                 @order.update(payment: @payment)
-                format.html { redirect_to root_path, notice: "Order was successfully ordered" }
+                format.html { redirect_to root_path, notice: "Payment was successfully conducted" }
                 format.json { status :created }
             else
-                format.html { redirect_to new_payment_path, notice: "Order was not successfully ordered" }
+                format.html { redirect_to new_payment_path, notice: "Payment was not successfully conducted" }
                 format.json { render json: @payment.errors, status: :unprocessable_entity }
             end
         end

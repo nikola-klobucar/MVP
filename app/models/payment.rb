@@ -1,6 +1,15 @@
+class PaymentResultValidator < ActiveModel::Validator
+    def validate payment
+        if JSON.parse(payment.payment_result)["order_number"] != Cart.find_by_id(JSON.parse(payment.payment_result)["custom_params"]).order.order_number
+            payment.errors.add :base, "Something went wrong"
+        end
+    end
+end
+
+
 class Payment < ApplicationRecord 
     has_one :order, dependent: :destroy
-    before_update :validate_successful_refund
+    validates_with PaymentResultValidator, on: :create
 
     def validate_successful_refund
       refund_functionality.status == 200
