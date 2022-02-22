@@ -1,5 +1,5 @@
 class Order < ApplicationRecord
-    has_one :cart
+    has_one :cart, dependent: :destroy
     belongs_to :user
     belongs_to :payment, optional: true
 
@@ -57,6 +57,6 @@ class Order < ApplicationRecord
         end
 
         def generate_order_number
-            self.order_number = SecureRandom.hex(10) + Time.now.to_i.to_s
+            self.order_number ||= SecureRandom.hex(10) + Time.now.to_i.to_s
         end
 end

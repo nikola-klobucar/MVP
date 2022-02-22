@@ -1,7 +1,21 @@
-class Payment < ApplicationRecord
-    has_one :order, dependent: :destroy
+class PaymentResultValidator < ActiveModel::Validator
+    def validate payment
+        order_number_from_req = JSON.parse(payment.payment_result)["order_number"]
+        order_number_from_cart = Cart.find_by_id(JSON.parse(payment.payment_result)["custom_params"]).order.order_number
+        unless order_number_from_req == order_number_from_cart
+            payment.errors.add :order_number_equality, "Payment's order_number is not matching Order's order_number"
+        end
+    end
+end
 
-    def refund_functionality
+
+class Payment < ApplicationRecord 
+    has_one :order, dependent: :destroy
+    has_one :refund_reference, dependent: :destroy
+    validates_with PaymentResultValidator, on: :create
+
+
+    def execute_refund
 
         @hashed_payment_result = JSON.parse(payment_result)
 
