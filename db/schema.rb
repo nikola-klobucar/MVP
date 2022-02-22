@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_15_133146) do
+ActiveRecord::Schema.define(version: 2022_02_22_110650) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -119,5 +119,6 @@ ActiveRecord::Schema.define(version: 2022_02_15_133146) do
   add_foreign_key "order_items", "carts"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "payments"
+  add_foreign_key "orders", "users"
   add_foreign_key "products", "admin_users"
 end
