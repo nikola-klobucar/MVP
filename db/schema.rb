@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_22_110650) do
+ActiveRecord::Schema.define(version: 2022_02_22_134007) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -102,6 +102,14 @@ ActiveRecord::Schema.define(version: 2022_02_22_110650) do
     t.index ["admin_user_id"], name: "index_products_on_admin_user_id"
   end
 
+  create_table "refund_references", force: :cascade do |t|
+    t.string "response", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "payment_id", null: false
+    t.index ["payment_id"], name: "index_refund_references_on_payment_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -121,4 +129,5 @@ ActiveRecord::Schema.define(version: 2022_02_22_110650) do
   add_foreign_key "orders", "payments"
   add_foreign_key "orders", "users"
   add_foreign_key "products", "admin_users"
+  add_foreign_key "refund_references", "payments"
 end

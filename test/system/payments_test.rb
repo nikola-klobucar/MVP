@@ -30,7 +30,7 @@ class PaymentsTest < ApplicationSystemTestCase
 
     #Submitting
     click_button 'Submit Payment'
-    sleep(2)
+    sleep(1)
     document = Nokogiri::XML(body)
     links = document.css('script')
     link = links.first
@@ -42,7 +42,7 @@ class PaymentsTest < ApplicationSystemTestCase
     end
   end
 
-  test "Refund is successfull" do
+  test "Refund is successfull and shows refund_reference and its response message" do
     test_Transaction_is_successful
 
     # Signing in the Admin User
@@ -60,46 +60,20 @@ class PaymentsTest < ApplicationSystemTestCase
     click_link "View"
     page.assert_selector('th', text: 'REFUND')
     page.assert_selector('td', text: 'NO')
-    click_link "Edit"
-    assert_selector "h2", text: "Edit Payment"
-
+    click_link "Refund"
+    
     # Refund
-    check "Refund"
-    click_button "Update Payment"
-    assert_equal true, Payment.last.validate_successful_refund
     page.assert_selector('th', text: 'REFUND')
     page.assert_selector('td', text: 'YES')
-    assert_equal "Payment was successfully updated", Nokogiri::XML(body).css('div.flash').text
-  end
+    assert_equal "Payment has been successfully refunded", Nokogiri::XML(body).css('div.flash').text
 
-  test "Refund is not successfull" do
+    # There is no more Refund link
+    assert has_no_field?('Refund')
 
-    # @raw_request now has an invalid :order_number
-    @raw_request = "{\"id\":386971,\"acquirer\":\"xml-sim\",\"order_number\":\"BADBADBAD\",\"order_info\":\"Testna trx\",\"amount\":242,\"currency\":\"EUR\",\"ch_full_name\":\"Test Test\",\"outgoing_amount\":1821,\"outgoing_currency\":\"HRK\",\"approval_code\":\"55624 \",\"response_code\":\"0000\",\"response_message\":\"transaction approved\",\"reference_number\":\"768068\",\"systan\":\"386971\",\"eci\":\"06\",\"xid\":null,\"acsv\":null,\"cc_type\":\"visa\",\"status\":\"approved\",\"created_at\":\"2022-02-17T15:35:07.256+01:00\",\"transaction_type\":\"purchase\",\"enrollment\":\"N\",\"authentication\":null,\"pan_token\":null,\"ch_email\":\"tester+components_sdk@monri.com\",\"masked_pan\":\"411111-xxx-xxx-1111\",\"issuer\":\"xml-sim\",\"number_of_installments\":null,\"custom_params\":\"2\",\"expiration_date\":\"3212\"}"
-    Payment.create(payment_result: @raw_request)
-
-    # Signing in the Admin User
-    Capybara.reset_sessions!
-    visit new_admin_user_session_path
-    assert :success
-    fill_in 'Email', with: 'admin@example.com'
-    fill_in 'Password', with: "password"
-    click_button 'Login'
-    assert_selector "h2", text: "Dashboard"
-
-    #Go to Edit Payment
-    click_link "Payments"
-    assert_selector "h2", text: "Payments"
-    click_link "View"
-    page.assert_selector('th', text: 'REFUND')
-    page.assert_selector('td', text: 'NO')
-    click_link "Edit"
-    assert_selector "h2", text: "Edit Payment"
-
-    # Refund
-    check "Refund"
-    click_button "Update Payment"
-    assert_equal false, Payment.last.validate_successful_refund
-    assert_equal "Refund has been unsuccessful", Nokogiri::XML(body).css('div.flash').text
+    # Asserting refund reference
+    first(:link, "Payments").click
+    page.assert_selector('td', text: "Refund reference ##{Payment.last.id}")
+    click_link "Refund reference ##{Payment.last.id}"
+    page.assert_selector('th', text: "RESPONSE")
   end
 end

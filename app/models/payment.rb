@@ -9,6 +9,7 @@ end
 
 class Payment < ApplicationRecord 
     has_one :order, dependent: :destroy
+    has_one :refund_reference, dependent: :destroy
     validates_with PaymentResultValidator, on: :create
 
     def validate_successful_refund
