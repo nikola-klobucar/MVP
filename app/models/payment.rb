@@ -1,6 +1,8 @@
 class PaymentResultValidator < ActiveModel::Validator
     def validate payment
-        if JSON.parse(payment.payment_result)["order_number"] != Cart.find_by_id(JSON.parse(payment.payment_result)["custom_params"]).order.order_number
+        order_number_from_req = JSON.parse(payment.payment_result)["order_number"]
+        order_number_from_cart = Cart.find_by_id(JSON.parse(payment.payment_result)["custom_params"]).order.order_number
+        unless order_number_from_req == order_number_from_cart
             payment.errors.add :order_number_equality, "Payment's order_number is not matching Order's order_number"
         end
     end
@@ -12,11 +14,8 @@ class Payment < ApplicationRecord
     has_one :refund_reference, dependent: :destroy
     validates_with PaymentResultValidator, on: :create
 
-    def validate_successful_refund
-      refund_functionality.status == 200
-    end
 
-    def refund_functionality
+    def execute_refund
 
         @hashed_payment_result = JSON.parse(payment_result)
 

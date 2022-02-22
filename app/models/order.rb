@@ -57,8 +57,6 @@ class Order < ApplicationRecord
         end
 
         def generate_order_number
-            if self.order_number.nil?
-                self.order_number = SecureRandom.hex(10) + Time.now.to_i.to_s
-            end
+            self.order_number ||= SecureRandom.hex(10) + Time.now.to_i.to_s
         end
 end

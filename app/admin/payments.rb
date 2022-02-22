@@ -16,8 +16,8 @@ ActiveAdmin.register Payment do
     def update
       @payment = Payment.find(permitted_params[:id])
       respond_to do |format|
-        if @payment.validate_successful_refund
-          @refund = RefundReference.new(response: @payment.refund_functionality.body)
+        if @payment.execute_refund.status == 200
+          @refund = RefundReference.new(response: @payment.execute_refund.body)
           @refund.save
           @payment.update(refund: true, refund_reference: @refund)
           format.html { redirect_to admin_payment_path(@payment), notice: "Payment has been successfully refunded"}

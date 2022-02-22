@@ -17,7 +17,7 @@ class PaymentTest < ActiveSupport::TestCase
   end
   
   def refund_function(payment_result)
-    Payment.new(payment_result: payment_result).refund_functionality
+    Payment.new(payment_result: payment_result).execute_refund
   end
 
   #------------
