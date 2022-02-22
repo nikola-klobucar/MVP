@@ -1,7 +1,7 @@
 class PaymentResultValidator < ActiveModel::Validator
     def validate payment
         if JSON.parse(payment.payment_result)["order_number"] != Cart.find_by_id(JSON.parse(payment.payment_result)["custom_params"]).order.order_number
-            payment.errors.add :base, "Something went wrong"
+            payment.errors.add :order_number_equality, "Payment's order_number is not matching Order's order_number"
         end
     end
 end
