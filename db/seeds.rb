@@ -4,7 +4,7 @@ puts "Creating a users"
 
 @user = User.new(email: "foo@bar.com", password: 123456, password_confirmation: 123456)
 @user.save
-@user_2 = User.new(email: "foo2@bar.com", password: 123456, password_confirmation: 123456)
+@user_2 = User.new(email: "nklobucbbb@gmail.com", password: 123456, password_confirmation: 123456)
 @user_2.save
 
 puts "Creating an admin"

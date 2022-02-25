@@ -27,6 +27,7 @@ class PaymentsController < ApplicationController
         @payment = Cart.find_by_id(JSON.parse(@raw_request)["custom_params"]).order.payment
         respond_to do |format|
             if @payment.update(payment_result: @raw_request)
+                HardJob.perform_async(@payment.order.cart.user.serializable_hash)
                 format.html { redirect_to root_path, notice: "Payment was successfully conducted" }
                 format.json { status :updated }
             else
