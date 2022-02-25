@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+  mount Sidekiq::Web => "/sidekiq"
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users do
@@ -14,5 +17,6 @@ Rails.application.routes.draw do
   resources :carts, only: [:index, :new, :create]
   resources :orders
   resources :payments, only: [:new, :create]
+  post '/valid_payments', to: 'payments#update_if_valid'
   resource :refunds, only: [:show]
 end

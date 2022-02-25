@@ -1,0 +1,19 @@
+Thank you for your business!
+
+Credit Card Owner:
+------------------
+full name: FULL_NAME
+address:  <%= @user.orders.last.address%>, <%= @user.orders.last.zip_code%>, <%= @user.orders.last.country %>
+phone: <%= @user.orders.last.phone%>
+email: <%= @user.email%>
+
+Order Details:
+------------------
+order amount: <%= JSON.parse(@user.orders.last.payment.payment_result)["amount"].to_f/100 %> <%= JSON.parse(@user.orders.last.payment.payment_result)["currency"] %>
+order number: <%= @user.orders.last.order_number %>
+order description: <%= JSON.parse(@user.orders.last.payment.payment_result)["order_info"] %>
+payment type: <%= JSON.parse(@user.orders.last.payment.payment_result)["cc_type"] %>
+date: <%= @user.orders.last.payment.updated_at %>
+order url: SUCCESS_URL
+
+Visit us again at again at DOMAIN.
