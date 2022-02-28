@@ -62,13 +62,15 @@ form.addEventListener('submit', function (event) {
         orderInfo: "Testna trx"
     }
 
+    callCreateAction(transactionParams)
+
     monri.confirmPayment(card, transactionParams).then(function (result) {
         if (result.error) {
             // Inform the customer that there was an error.
             var errorElement = document.getElementById('card-errors');
             errorElement.textContent = result.error.message;
         } else {
-            // handlePaymentResult(result.result)
+            handlePaymentResult(result.result)
         }
     });
 });
@@ -77,13 +79,16 @@ function handlePaymentResult(paymentResult) {
     // Handle PaymentResult
     if (paymentResult.status == 'approved') {
         alert("Transaction approved")
-        // jQuery.ajax({
-        //     data: "payment_result=" + paymentResult.amount,
-        //     dataType: 'script',
-        //     type: 'post',
-        //     url: "/payments"
-        //   });
     } else {
         alert("Transaction declined")
     }
 }
+
+function callCreateAction(transactionParams) {
+    jQuery.ajax({
+        data: "payment=" + JSON.stringify(transactionParams),
+        dataType: 'script',
+        type: 'post',
+        url: "/payments"
+      });
+    }

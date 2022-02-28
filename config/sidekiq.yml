@@ -1,0 +1,5 @@
+:schedule:
+  run_simple_job:
+    description: "Run SImple RUn"
+    class: "SimpleJob"
+    every: [ "30s", first_in: "0s" ]
