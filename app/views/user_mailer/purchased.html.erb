@@ -1,0 +1,22 @@
+<div>
+<h2>"Thank you for your business!</h2>
+
+<h4>Credit Card Owner</h4>
+------------------
+<p>full name: FULL Name</p>
+<p>address: <%= @user.orders.last.address%>, <%= @user.orders.last.zip_code%>, <%= @user.orders.last.country %></p>
+<p>phone: <%= @user.orders.last.phone%></p>
+<p>email: <%= @user.email%></p>
+
+<h4>Order Details:</h4>
+------------------
+<p>order amount: <%= JSON.parse(@user.orders.last.payment.payment_result)["amount"].to_f/100 %> <%= JSON.parse(@user.orders.last.payment.payment_result)["currency"] %></p>
+<p>order number: <%= @user.orders.last.order_number %></p>
+<p>order description: <%= JSON.parse(@user.orders.last.payment.payment_result)["order_info"] %></p>
+<p>payment type: <%= JSON.parse(@user.orders.last.payment.payment_result)["cc_type"] %></p>
+<p>date: <%= @user.orders.last.payment.updated_at %></p>
+<p>order url: SUCCESS_URL</p>
+
+<h4>Visit us again at again at DOMAIN."</h4>
+
+</div> 
